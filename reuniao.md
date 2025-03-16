@@ -11,7 +11,7 @@
 ## UseCases (Regras de negócio)
 
 [X] Cadastrar um novo usuário
-[] - CPF ou email devem ser únicos
+[X] - CPF ou email devem ser únicos
 
 [] Buscar um cadastro de usuário por CPF
 [] - Retornar um usuário ou vazio
