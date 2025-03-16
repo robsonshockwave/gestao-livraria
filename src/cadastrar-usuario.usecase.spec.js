@@ -6,6 +6,9 @@ describe('Cadastrar usuario UseCase', function () {
     cadastrar: jest.fn(),
   };
 
+  // Triple AAA
+
+  // Arrange (preparação)
   test('Deve poder cadastrar um usuario', async function () {
     const usuarioDTO = {
       nome_completo: 'nome_valido',
@@ -15,17 +18,27 @@ describe('Cadastrar usuario UseCase', function () {
       email: 'email_valido',
     };
 
+    // ACT (ação)
     const sut = cadastrarUsuarioUsecase({ usuariosRepository });
     const output = await sut(usuarioDTO);
 
+    // Assert (afirmação)
     expect(output).toBeUndefined();
     expect(usuariosRepository.cadastrar).toHaveBeenCalledWith(usuarioDTO);
     expect(usuariosRepository.cadastrar).toHaveBeenCalledTimes(1);
   });
-});
 
-test('Deve retornar um throw AppError se o usuariosRepository não for fornecido', function () {
-  expect(() => cadastrarUsuarioUsecase({})).toThrow(
-    new AppError(AppError.dependencias)
-  );
+  test('Deve retornar um throw AppError se o usuariosRepository não for fornecido', function () {
+    expect(() => cadastrarUsuarioUsecase({})).toThrow(
+      new AppError(AppError.dependencias)
+    );
+  });
+
+  test('Deve retornar um throw AppError se os campos obrigatórios não forem fornecidos', async function () {
+    const sut = cadastrarUsuarioUsecase({ usuariosRepository });
+
+    await expect(() => sut({})).rejects.toThrow(
+      new AppError(AppError.parametrosObrigatoriosAusentes)
+    );
+  });
 });
