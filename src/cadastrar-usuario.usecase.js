@@ -8,9 +8,14 @@ module.exports = function cadastrarUsuarioUseCase({ usuariosRepository }) {
 
     const checaSeJaExisteUmUsuarioCadastradoComOCPF =
       await usuariosRepository.existePorCPF(CPF);
+    const checaSeJaExisteUmUsuarioCadastradoComOEmail =
+      await usuariosRepository.existePorEmail(email);
 
     if (checaSeJaExisteUmUsuarioCadastradoComOCPF)
       return Either.Left(Either.valorJaCadastrado('CPF'));
+
+    if (checaSeJaExisteUmUsuarioCadastradoComOEmail)
+      return Either.Left(Either.valorJaCadastrado('email'));
 
     if (!checaCampos)
       throw new AppError(AppError.parametrosObrigatoriosAusentes);
