@@ -1,4 +1,4 @@
-const AppError = require('./shared/errors/AppError');
+const { Either, AppError } = require('./shared/errors');
 
 module.exports = function cadastrarUsuarioUseCase({ usuariosRepository }) {
   if (!usuariosRepository) throw new AppError(AppError.dependencias);
@@ -10,7 +10,7 @@ module.exports = function cadastrarUsuarioUseCase({ usuariosRepository }) {
       await usuariosRepository.existePorCPF(CPF);
 
     if (checaSeJaExisteUmUsuarioCadastradoComOCPF)
-      throw new AppError('CPF já cadastrado');
+      return Either.Left(Either.valorJaCadastrado('CPF'));
 
     if (!checaCampos)
       throw new AppError(AppError.parametrosObrigatoriosAusentes);
@@ -22,5 +22,7 @@ module.exports = function cadastrarUsuarioUseCase({ usuariosRepository }) {
       endereco,
       email,
     });
+
+    return Either.Right(null);
   };
 };
