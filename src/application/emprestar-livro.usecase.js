@@ -22,7 +22,7 @@ module.exports = function emprestarLivroUseCase({ emprestimosRepository }) {
       });
 
     if (existeLivroISBNEmprestadoPendenteUsuario) {
-      return Either.Left(Either.livroComISBNJaEmprestadoPendenteUsuario());
+      return Either.Left(Either.livroComISBNJaEmprestadoPendenteUsuario);
     }
 
     await emprestimosRepository.emprestar({
