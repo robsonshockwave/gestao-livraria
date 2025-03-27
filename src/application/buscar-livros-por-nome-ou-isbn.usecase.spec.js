@@ -13,7 +13,7 @@ describe('Buscar Livros Por Nome Ou ISBN Use Case', function () {
     const outputDTO = [
       {
         id: 'id_valido',
-        nome: 'nome_valido',
+        nome: 'valor_valido',
         autor: 'autor_valido',
         genero: 'genero_valido',
         ISBN: 'valor_valido',
@@ -26,6 +26,23 @@ describe('Buscar Livros Por Nome Ou ISBN Use Case', function () {
     const output = await sut(nomeISBNDTO);
 
     expect(output.right).toEqual(outputDTO);
+    expect(livrosRepository.buscarPorNomeOuISBN).toHaveBeenCalledWith(
+      nomeISBNDTO.valor
+    );
+    expect(livrosRepository.buscarPorNomeOuISBN).toHaveBeenCalledTimes(1);
+  });
+
+  test('Deve retornar um array vazio quando não existir um livro com o nome ou ISBN informados', async function () {
+    livrosRepository.buscarPorNomeOuISBN.mockResolvedValue([]);
+
+    const nomeISBNDTO = {
+      valor: 'valor_nao_cadastrado',
+    };
+
+    const sut = buscarLivrosPorNomeOuISBNUseCase({ livrosRepository });
+    const output = await sut(nomeISBNDTO);
+
+    expect(output.right).toEqual([]);
     expect(livrosRepository.buscarPorNomeOuISBN).toHaveBeenCalledWith(
       nomeISBNDTO.valor
     );
