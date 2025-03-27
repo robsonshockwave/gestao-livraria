@@ -9,6 +9,10 @@ module.exports = function buscarLivrosPorNomeOuISBNUseCase({
   }
 
   return async function ({ valor }) {
+    if (!valor) {
+      throw new AppError(AppError.parametrosObrigatoriosAusentes);
+    }
+
     const livros = await livrosRepository.buscarPorNomeOuISBN(valor);
 
     return Either.Right(livros);

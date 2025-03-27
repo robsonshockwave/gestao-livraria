@@ -55,4 +55,12 @@ describe('Buscar Livros Por Nome Ou ISBN Use Case', function () {
       new AppError(AppError.dependencias)
     );
   });
+
+  test('Deve retornar um throw AppError se o valor não for fornecido', async function () {
+    const sut = buscarLivrosPorNomeOuISBNUseCase({ livrosRepository });
+
+    await expect(() => sut({})).rejects.toThrow(
+      new AppError(AppError.parametrosObrigatoriosAusentes)
+    );
+  });
 });
