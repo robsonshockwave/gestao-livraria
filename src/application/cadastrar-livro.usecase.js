@@ -12,6 +12,13 @@ module.exports = function cadastrarLivroUseCase({ livrosRepository }) {
       throw new AppError(AppError.parametrosObrigatoriosAusentes);
     }
 
+    const checaSeJaExisteUmLivroCadastradoComOISBN =
+      await livrosRepository.existePorISBN(ISBN);
+
+    if (checaSeJaExisteUmLivroCadastradoComOISBN) {
+      return Either.Left(Either.valorJaCadastrado('ISBN'));
+    }
+
     await livrosRepository.cadastrar({
       nome,
       genero,
