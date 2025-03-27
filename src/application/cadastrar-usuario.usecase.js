@@ -1,4 +1,4 @@
-const { Either, AppError } = require('./shared/errors');
+const { Either, AppError } = require('../shared/errors');
 
 module.exports = function cadastrarUsuarioUseCase({ usuariosRepository }) {
   if (!usuariosRepository) throw new AppError(AppError.dependencias);

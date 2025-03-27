@@ -1,5 +1,5 @@
 const cadastrarUsuarioUseCase = require('./cadastrar-usuario.usecase');
-const { AppError, Either } = require('./shared/errors');
+const { AppError, Either } = require('../shared/errors');
 
 describe('Cadastrar usuario UseCase', function () {
   const usuariosRepository = {
