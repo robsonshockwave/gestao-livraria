@@ -1,4 +1,4 @@
-const { Either } = require('../shared/errors');
+const { Either, AppError } = require('../shared/errors');
 const emprestarLivroUseCase = require('./emprestar-livro.usecase');
 
 describe('Emprestar Livro Use Case', function () {
@@ -64,5 +64,19 @@ describe('Emprestar Livro Use Case', function () {
     expect(
       emprestimosRepository.existeLivroISBNEmprestadoPendenteUsuario
     ).toHaveBeenCalledTimes(1);
+  });
+
+  test('Deve retornar um throw AppError se o emprestimosRepository não for fornecido', function () {
+    expect(() => emprestarLivroUseCase({})).toThrow(
+      new AppError(AppError.dependencias)
+    );
+  });
+
+  test('Deve retornar um throw AppError se algum campo obrigatório não for fornecido', async function () {
+    const sut = emprestarLivroUseCase({ emprestimosRepository });
+
+    await expect(() => sut({})).rejects.toThrow(
+      new AppError(AppError.parametrosObrigatoriosAusentes)
+    );
   });
 });
