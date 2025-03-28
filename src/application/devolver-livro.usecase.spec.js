@@ -1,3 +1,4 @@
+const { AppError } = require('../shared/errors');
 const devolverLivroUseCase = require('./devolver-livro.usecase');
 
 describe('Devolver livro UseCase', function () {
@@ -43,5 +44,11 @@ describe('Devolver livro UseCase', function () {
       devolverLivroDTO
     );
     expect(emprestimosRepository.devolver).toHaveBeenCalledTimes(1);
+  });
+
+  test('Deve retornar um throw AppError se o emprestimosRepository não for fornecido', function () {
+    expect(() => devolverLivroUseCase({})).toThrow(
+      new AppError(AppError.dependencias)
+    );
   });
 });
