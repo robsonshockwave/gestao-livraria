@@ -6,15 +6,39 @@ describe('Devolver livro UseCase', function () {
   };
 
   test('Deve ser possível devolver um livro sem multa', async function () {
+    emprestimosRepository.devolver.mockResolvedValue({
+      data_retorno: new Date('2025-01-01'),
+    });
+
     const devolverLivroDTO = {
       emprestimo_id: 'qualquer_id',
-      data_devolucao: new Date('2025-04-01'),
+      data_devolucao: new Date('2025-01-01'),
     };
 
     const sut = devolverLivroUseCase({ emprestimosRepository });
     const output = await sut(devolverLivroDTO);
 
     expect(output.right).toBe('Multa por atraso: R$ 0');
+    expect(emprestimosRepository.devolver).toHaveBeenCalledWith(
+      devolverLivroDTO
+    );
+    expect(emprestimosRepository.devolver).toHaveBeenCalledTimes(1);
+  });
+
+  test('Deve ser possível devolver um livro com multa', async function () {
+    emprestimosRepository.devolver.mockResolvedValue({
+      data_retorno: new Date('2025-01-01'),
+    });
+
+    const devolverLivroDTO = {
+      emprestimo_id: 'qualquer_id',
+      data_devolucao: new Date('2025-01-04'),
+    };
+
+    const sut = devolverLivroUseCase({ emprestimosRepository });
+    const output = await sut(devolverLivroDTO);
+
+    expect(output.right).toBe('Multa por atraso: R$ 10,00');
     expect(emprestimosRepository.devolver).toHaveBeenCalledWith(
       devolverLivroDTO
     );
