@@ -1,0 +1,21 @@
+describe('Devolver livro UseCase', function () {
+  const emprestimosRepository = {
+    devolver: jest.fn(),
+  };
+
+  test('Deve ser possível devolver um livro sem multa', async function () {
+    const devolverLivroDTO = {
+      emprestimo_id: 'qualquer_id',
+      data_devolucao: new Date('2025-04-01'),
+    };
+
+    const sut = devolverLivroUseCase({ emprestimosRepository });
+    const output = await sut(devolverLivroDTO);
+
+    expect(output.right).toBe('Multa por atrase: R$ 0');
+    expect(emprestimosRepository.devolver).toHaveBeenCalledWith(
+      devolverLivroDTO
+    );
+    expect(emprestimosRepository.devolver).toHaveBeenCalledTimes(1);
+  });
+});
