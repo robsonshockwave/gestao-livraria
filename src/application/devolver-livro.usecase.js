@@ -6,6 +6,12 @@ module.exports = function devolverLivroUseCase({ emprestimosRepository }) {
   }
 
   return async function ({ emprestimo_id, data_devolucao }) {
+    const checaCampos = emprestimo_id && data_devolucao;
+
+    if (!checaCampos) {
+      throw new AppError(AppError.parametrosObrigatoriosAusentes);
+    }
+
     const { data_retorno } = await emprestimosRepository.devolver({
       emprestimo_id,
       data_devolucao,

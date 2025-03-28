@@ -51,4 +51,12 @@ describe('Devolver livro UseCase', function () {
       new AppError(AppError.dependencias)
     );
   });
+
+  test('Deve retornar um throw AppError se algum campo obrigatório não for fornecido', async function () {
+    const sut = devolverLivroUseCase({ emprestimosRepository });
+
+    await expect(() => sut({})).rejects.toThrow(
+      new AppError(AppError.parametrosObrigatoriosAusentes)
+    );
+  });
 });
