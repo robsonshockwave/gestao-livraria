@@ -21,9 +21,7 @@ const usuariosRepository = function () {
 
   const buscarPorCPF = async function (CPF) {
     const usuario = await typeormUsuariosRepository.findOneBy({
-      where: {
-        CPF,
-      },
+      CPF,
     });
 
     return usuario;
