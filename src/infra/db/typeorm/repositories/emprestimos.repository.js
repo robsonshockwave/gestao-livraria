@@ -63,7 +63,7 @@ const emprestimosRepository = function () {
       },
     });
 
-    return emprestimosPendentes.length === 0 ? false : true;
+    return emprestimosPendentes === 0 ? false : true;
   };
 
   const buscarEmprestimoComLivroComUsuarioPorID = async function (id) {
