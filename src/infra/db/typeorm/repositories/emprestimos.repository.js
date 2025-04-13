@@ -1,3 +1,4 @@
+const { IsNull } = require('typeorm');
 const { typeormServer } = require('../setup');
 
 const typeormEmprestimosRepository = typeormServer.getRepository('Emprestimo');
@@ -29,7 +30,48 @@ const emprestimosRepository = function () {
     return { data_retorno };
   };
 
-  return { emprestar, devolver };
+  const buscarPendentesComLivroComUsuario = async function () {
+    const emprestimosPendentes = await typeormEmprestimosRepository.find({
+      where: { data_devolucao: IsNull() },
+      relations: ['livro', 'usuario'],
+      select: {
+        id: true,
+        data_saida: true,
+        data_retorno: true,
+        livro: {
+          nome: true,
+        },
+        usuario: {
+          nome_completo: true,
+          CPF: true,
+        },
+      },
+    });
+
+    return emprestimosPendentes;
+  };
+
+  const existeLivroISBNEmprestadoPendenteUsuario = async function ({
+    usuario_id,
+    livro_id,
+  }) {
+    const emprestimosPendentes = await typeormEmprestimosRepository.count({
+      where: {
+        data_devolucao: IsNull(),
+        livro_id,
+        usuario_id,
+      },
+    });
+
+    return emprestimosPendentes.length === 0 ? false : true;
+  };
+
+  return {
+    emprestar,
+    devolver,
+    buscarPendentesComLivroComUsuario,
+    existeLivroISBNEmprestadoPendenteUsuario,
+  };
 };
 
 module.exports = { emprestimosRepository, typeormEmprestimosRepository };
