@@ -66,11 +66,34 @@ const emprestimosRepository = function () {
     return emprestimosPendentes.length === 0 ? false : true;
   };
 
+  const buscarEmprestimoComLivroComUsuarioPorID = async function (id) {
+    const emprestimo = await typeormEmprestimosRepository.findOne({
+      where: { id },
+      select: {
+        id: true,
+        data_saida: true,
+        data_retorno: true,
+        usuario: {
+          nome_completo: true,
+          CPF: true,
+          email: true,
+        },
+        livro: {
+          nome: true,
+        },
+      },
+      relations: ['livro', 'usuario'],
+    });
+
+    return emprestimo;
+  };
+
   return {
     emprestar,
     devolver,
     buscarPendentesComLivroComUsuario,
     existeLivroISBNEmprestadoPendenteUsuario,
+    buscarEmprestimoComLivroComUsuarioPorID,
   };
 };
 
