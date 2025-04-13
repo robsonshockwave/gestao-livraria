@@ -8,6 +8,7 @@ const typeormServer = new typeorm.DataSource({
   entities: [
     require('./entities/Usuario.entity-typeorm'),
     require('./entities/Livro.entity-typeorm'),
+    require('./entities/Emprestimo.entity-typeorm'),
   ],
 });
 
