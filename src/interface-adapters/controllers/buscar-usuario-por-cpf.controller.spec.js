@@ -32,4 +32,23 @@ describe('Buscar usuario por CPF controller', function () {
     expect(buscarUsuarioPorCPFUseCase).toHaveBeenCalledWith(httpRequest.params);
     expect(buscarUsuarioPorCPFUseCase).toHaveBeenCalledTimes(1);
   });
+
+  test('Deve retornar um httpResponse 200 e null se não for encontrado nenhum usuario com CPF', async function () {
+    buscarUsuarioPorCPFUseCase.mockResolvedValue(Either.Right(null));
+
+    const httpRequest = {
+      params: {
+        CPF: '123.123.123-12',
+      },
+    };
+
+    const response = await buscarUsuarioPorCpfController({
+      buscarUsuarioPorCPFUseCase,
+      httpRequest,
+    });
+
+    expect(response).toEqual(httpResponse(200, null));
+    expect(buscarUsuarioPorCPFUseCase).toHaveBeenCalledWith(httpRequest.params);
+    expect(buscarUsuarioPorCPFUseCase).toHaveBeenCalledTimes(1);
+  });
 });
