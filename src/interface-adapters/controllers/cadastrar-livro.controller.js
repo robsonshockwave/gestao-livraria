@@ -42,6 +42,6 @@ module.exports = async function cadastrarLivroController({
 
   return output.fold(
     (error) => httpResponse(400, error.message),
-    (livro) => httpResponse(200, livro)
+    () => httpResponse(201, null)
   );
 };
