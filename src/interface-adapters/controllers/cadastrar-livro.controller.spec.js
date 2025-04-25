@@ -1,3 +1,4 @@
+const { ZodError } = require('zod');
 const { Either, AppError } = require('../../shared/errors');
 const httpResponse = require('../../shared/helpers/http.response');
 const cadastrarLivroController = require('./cadastrar-livro.controller');
@@ -57,5 +58,15 @@ describe('Cadastrar livro controller', function () {
     await expect(() => cadastrarLivroController({})).rejects.toThrow(
       new AppError(AppError.dependencias)
     );
+  });
+
+  test('Deve retorna um erro do Zod validator se der error na validação dos dados obrigatórios', function () {
+    const httpRequest = {
+      body: {},
+    };
+
+    expect(() =>
+      cadastrarLivroController({ cadastrarLivroUseCase, httpRequest })
+    ).rejects.toBeInstanceOf(ZodError);
   });
 });
