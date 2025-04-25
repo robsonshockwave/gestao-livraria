@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "node --watch ./src/main/api/server.js",
     "test": "jest --runInBand"
   },
   "keywords": [],
