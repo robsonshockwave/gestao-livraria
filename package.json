@@ -15,6 +15,7 @@
     "sqlite3": "^5.1.7"
   },
   "dependencies": {
+    "express": "^4.21.2",
     "typeorm": "^0.3.21",
     "zod": "^3.24.2"
   }
