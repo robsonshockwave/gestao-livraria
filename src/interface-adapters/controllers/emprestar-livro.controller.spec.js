@@ -31,4 +31,33 @@ describe('Emprestar livro Controller', function () {
     });
     expect(emprestarLivroUseCase).toHaveBeenCalledTimes(1);
   });
+
+  test('Deve retornar um httpResponse 400 e message se o emprestimo não for realizado com sucesso por lógica do useCase', async function () {
+    emprestarLivroUseCase.mockResolvedValue(
+      Either.Left({ message: 'validacao_invalida' })
+    );
+
+    const httpRequest = {
+      body: {
+        usuario_id: 1,
+        livro_id: 1,
+        data_saida: '2025-01-02',
+        data_retorno: '2025-01-04',
+      },
+    };
+
+    const response = await emprestarLivroController({
+      emprestarLivroUseCase,
+      httpRequest,
+    });
+
+    expect(response).toEqual(httpResponse(400, 'validacao_invalida'));
+    expect(emprestarLivroUseCase).toHaveBeenCalledWith({
+      usuario_id: 1,
+      livro_id: 1,
+      data_saida: expect.any(Date),
+      data_retorno: expect.any(Date),
+    });
+    expect(emprestarLivroUseCase).toHaveBeenCalledTimes(1);
+  });
 });
