@@ -28,6 +28,31 @@ describe('Cadastrar livro controller', function () {
     expect(cadastrarLivroUseCase).toHaveBeenCalledTimes(1);
   });
 
+  test('Deve retornar um httpResponse 400 e message se o livro não for cadastro com sucesso por lógica no useCase', async function () {
+    cadastrarLivroUseCase.mockResolvedValue(
+      Either.Left({ message: 'validacao_invalida' })
+    );
+
+    const httpRequest = {
+      body: {
+        nome: 'qualquer_nome',
+        genero: 'qualquer_genero',
+        autor: 'qualquer_autor',
+        ISBN: 'qualquer_ISBN',
+        quantidade: 10,
+      },
+    };
+
+    const response = await cadastrarLivroController({
+      cadastrarLivroUseCase,
+      httpRequest,
+    });
+
+    expect(response).toEqual(httpResponse(400, 'validacao_invalida'));
+    expect(cadastrarLivroUseCase).toHaveBeenCalledWith(httpRequest.body);
+    expect(cadastrarLivroUseCase).toHaveBeenCalledTimes(1);
+  });
+
   test('Deve retorna um throw AppError se o cadastrarLivroUseCase e httpRequest não for fornecido', async function () {
     await expect(() => cadastrarLivroController({})).rejects.toThrow(
       new AppError(AppError.dependencias)
