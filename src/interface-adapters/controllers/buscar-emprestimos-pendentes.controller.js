@@ -3,9 +3,8 @@ const httpResponse = require('../../shared/helpers/http.response');
 
 module.exports = async function buscarEmprestimosPendentesController({
   buscarEmprestimosPendentesUseCase,
-  httpRequest,
 }) {
-  if (!buscarEmprestimosPendentesUseCase || !httpRequest) {
+  if (!buscarEmprestimosPendentesUseCase) {
     throw new AppError(AppError.dependencias);
   }
 
