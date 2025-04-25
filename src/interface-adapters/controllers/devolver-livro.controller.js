@@ -1,5 +1,6 @@
 const { z } = require('zod');
 const httpResponse = require('../../shared/helpers/http.response');
+const { AppError } = require('../../shared/errors');
 
 const zodValidatorBody = z.object({
   data_devolucao: z.string({
