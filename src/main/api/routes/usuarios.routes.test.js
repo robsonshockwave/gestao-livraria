@@ -55,4 +55,13 @@ describe('Usuarios Routes', function () {
     expect(statusCode).toBe(200);
     expect(body).toEqual(expect.objectContaining(usuarioDTO));
   });
+
+  test('Deve retornar null ao buscar um não cadastrado com o CPF buscado', async function () {
+    const { statusCode, body } = await request(app).get(
+      '/usuarios/cpf/123.123.123-12'
+    );
+
+    expect(statusCode).toBe(200);
+    expect(body).toBeNull();
+  });
 });
