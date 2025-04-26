@@ -4,6 +4,7 @@ const {
 } = require('../../../infra/db/typeorm/repositories/usuarios.repository');
 const cadastrarUsuarioUsecase = require('../../../application/cadastrar-usuario.usecase');
 const cadastrarUsuarioController = require('../../../interface-adapters/controllers/cadastrar-usuario.controller');
+const cadastrarUsuarioCompose = require('../composers/cadastrar-usuario.compose');
 
 const usuariosRoutes = Router();
 
@@ -12,16 +13,9 @@ usuariosRoutes.post('/', async (req, res) => {
     body: req.body,
   };
 
-  const usuariosRepositoryFn = usuariosRepository();
-  const cadastrarUsuarioUseCaseFn = cadastrarUsuarioUsecase({
-    usuariosRepository: usuariosRepositoryFn,
-  });
-  const { statusCody, body } = cadastrarUsuarioController({
-    cadastrarUsuarioUseCase: cadastrarUsuarioUseCaseFn,
-    httpRequest,
-  });
+  const { statusCode, body } = await cadastrarUsuarioCompose(httpRequest);
 
-  return res.status(statusCody).json(body);
+  return res.status(statusCode).json(body);
 });
 
 module.exports = { usuariosRoutes };
