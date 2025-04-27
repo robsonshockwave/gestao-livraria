@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const cadastrarLivroCompose = require('../composers/cadastrar-livro.compose');
-const buscarLivroPorNomeIsbnCompose = require('../composers/buscar-livro-por-nome-isbn.compose');
+const buscarLivroPorNomeISBNCompose = require('../composers/buscar-livro-por-nome-isbn.compose');
 
 const livrosRoutes = Router();
 
@@ -19,7 +19,7 @@ livrosRoutes.get('/', async (req, res) => {
     query: req.query,
   };
 
-  const { statusCode, body } = await buscarLivroPorNomeIsbnCompose(httpRequest);
+  const { statusCode, body } = await buscarLivroPorNomeISBNCompose(httpRequest);
 
   return res.status(statusCode).json(body);
 });
