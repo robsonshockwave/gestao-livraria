@@ -1,4 +1,4 @@
-const cadastrarLivroUsecase = require('../../../application/cadastrar-livro.usecase');
+const cadastrarLivroUseCase = require('../../../application/cadastrar-livro.usecase');
 const {
   livrosRepository,
 } = require('../../../infra/db/typeorm/repositories/livros.repository');
@@ -6,7 +6,7 @@ const cadastrarLivroController = require('../../../interface-adapters/controller
 
 module.exports = async function cadastrarLivroCompose(httpRequest) {
   const livrosRepositoryFn = livrosRepository();
-  const cadastrarLivroUseCaseFn = cadastrarLivroUsecase({
+  const cadastrarLivroUseCaseFn = cadastrarLivroUseCase({
     livrosRepository: livrosRepositoryFn,
   });
   const controller = await cadastrarLivroController({
