@@ -87,4 +87,16 @@ describe('Emprestimos Routes', function () {
     expect(statusCode).toBe(200);
     expect(body).toBe('Multa por atraso: R$ 10,00');
   });
+
+  test('Deve retornar um erro caso o campo obrigatório não tenha sido informado', async function () {
+    const { statusCode, body } = await request(app)
+      .put(`/emprestimos/devolver/3`)
+      .send({});
+
+    expect(statusCode).toBe(400);
+    expect(body.message).toBe('Erro na validação');
+    expect(body.errors.fieldErrors).toEqual({
+      data_devolucao: ['Data devolução é obrigatório'],
+    });
+  });
 });
