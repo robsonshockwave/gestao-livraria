@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === 'test') {
     // entities: [resolve(__dirname, './entities/*.entity-typeorm.js')],
   });
 } else {
-  typeormServer = new typeorm.DataSource({ ...typeormProd });
+  typeormServer = new typeorm.DataSource(...typeormProd);
 }
 
 module.exports = { typeormServer };
