@@ -7,7 +7,8 @@
     "dev": "node --watch ./src/main/api/server.js",
     "test": "NODE_ENV=test jest --runInBand",
     "test:integration": "NODE_ENV=integration jest --config=jest.integration.js --runInBand",
-    "test:all": "npm test && npm run test:integration"
+    "test:all": "npm test && npm run test:integration",
+    "queue": "node src/main/api/queue.js"
   },
   "keywords": [],
   "author": "",

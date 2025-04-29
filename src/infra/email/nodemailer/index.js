@@ -29,7 +29,8 @@ module.exports = function nodemailerService() {
       from: '"Biblioteca UNI" <contato@uni.com>',
       to: email,
       subject: 'Novo livro emprestado',
-      text: `Olá ${nome_usuario}(${CPF}), você pegou o livro ${nome_livro} emprestado dia ${data_saida_BR} e deverá ser devolvido no dia ${data_retorno_BR}.\n\nBoa leitura!`,
+      // text: `Olá ${nome_usuario}(${CPF}), você pegou o livro ${nome_livro} emprestado dia ${data_saida_BR} e deverá ser devolvido no dia ${data_retorno_BR}.\n\nBoa leitura!`,
+      text: `Olá ${nome_usuario}(${CPF}), você pegou o livro ${nome_livro} emprestado dia ${data_saida} e deverá ser devolvido no dia ${data_retorno}.\n\nBoa leitura!`,
     });
   };
 
