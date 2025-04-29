@@ -10,11 +10,11 @@ module.exports = function nodemailerService() {
     nome_livro,
   }) {
     const transporter = nodemailer.createTransport({
-      host: 'sandbox.smtp.mailtrap.io',
-      pot: 465,
+      host: process.env.NODEMAILER_HOST,
+      pot: process.env.NODEMAILER_PORT,
       auth: {
-        user: '80c6454dbf09e6',
-        pass: '3744d69da039dd',
+        user: process.env.NODEMAILER_USER,
+        pass: process.env.NODEMAILER_PASS,
       },
     });
 
