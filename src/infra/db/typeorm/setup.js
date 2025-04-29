@@ -32,6 +32,22 @@ if (process.env.NODE_ENV === 'test') {
     ],
     // entities: [resolve(__dirname, './entities/*.entity-typeorm.js')],
   });
+} else {
+  typeormServer = new typeorm.DataSource({
+    type: 'postgres',
+    host: 'localhost',
+    database: 'biblioteca',
+    synchronize: false,
+    port: 5432,
+    username: 'postgres',
+    password: 'postgres',
+    entities: [
+      require('./entities/Usuario.entity-typeorm'),
+      require('./entities/Livro.entity-typeorm'),
+      require('./entities/Emprestimo.entity-typeorm'),
+    ],
+    // entities: [resolve(__dirname, './entities/*.entity-typeorm.js')],
+  });
 }
 
 module.exports = { typeormServer };
